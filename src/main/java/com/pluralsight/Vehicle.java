@@ -1,5 +1,7 @@
 package com.pluralsight;
 
+import java.time.LocalDate;
+
 public class Vehicle extends Asset{
 
     private String makeModel;
@@ -37,10 +39,36 @@ public class Vehicle extends Asset{
     public void setOdometer(int odometer) {
         this.odometer = odometer;
     }
+    public int add(int number1, int number2){
+        return number1 + number2;
+    }
+
+    public int add(int number1, int number2, int numer3){
+        return number1 + number2 + numer3;
+    }
+
+
 
     @Override
     public double getValue(){
-        return 0;
+        double value;
+        int currentYear = LocalDate.now().getYear();
+        int age = currentYear - year;
+        switch (age){
+            case 1, 2, 3:
+                value = getOriginalCost() - getOriginalCost()*.03;
+            case 4, 5, 6:
+                value = getOriginalCost() - getOriginalCost()*.06;
+            case 7, 8, 9, 10:
+                value = getOriginalCost() - getOriginalCost()*.08;
+            default:
+                value = 1000;
+        }
+
+        if(odometer > 100000 && (!makeModel.equalsIgnoreCase("Honda") && !makeModel.equalsIgnoreCase("Toyota"))){
+            value -= value * .25;
+        }
+        return value;
 
     }
    // 0-3 years old - 3% reduced value of cost per year
